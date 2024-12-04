@@ -16,6 +16,9 @@ let grid = [[0,0,0,0],
 let sequence = []; //stores sequence in order
 let sequenceLength; //length of sequence, should increase with dififculty 
 
+let highlightDurationLength = 500;
+let highlightStartTime;
+
 function setup() {
   createCanvas(1000, 700);
   rectWidth = width/NUM_COLS;
@@ -27,8 +30,8 @@ function setup() {
 function draw() {
   background(20);
   drawGrid();
-
-  // testCoordinate(); //testing coordinates of grid
+  highlightSequence();
+  testCoordinate(); //testing coordinates of grid
   
 }
 
@@ -43,7 +46,7 @@ function drawGrid() {
 
 function generateSequence() {
   sequence = []; //empty sequence at start, want generation in setup
-  sequenceLength = 4; ///set length for testing
+  sequenceLength = 5; ///set length for testing
   for (let i = 0; i < sequenceLength; i ++) {
     let randomCol = int(random(0, NUM_COLS));
     let randomRow = int(random(0, NUM_ROWS));
@@ -52,20 +55,30 @@ function generateSequence() {
   console.log(sequence); //here for testing sequence generation
 }
 
-function highlightSequence() {
+function highlightSequence() { //highlight squares, THIS FUNCTION IS WIP
   for (let i = 0; i < sequenceLength; i++) {
-    
+    let col = sequence[i][0];
+    let row = sequence[i][1];
+
+    highlightStartTime = millis();
+
+
+
+    fill(255);
+    rect(col * rectWidth, row * rectHeight, rectWidth, rectHeight);
   }
 }
 
 
+
+
 ///////////////////////--------TESTING CORNER-----------//////////////////////////
 
-// function testCoordinate() { //used to test grid coordinate system
-//   if (mouseX >=0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-//     let gridX = int((mouseX / rectWidth));
-//     let gridY = int((mouseY / rectHeight));
-//     console.log(gridX, gridY);
-//   }
-// }
+function testCoordinate() { //used to test grid coordinate system
+  if (mouseX >=0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
+    let gridX = int((mouseX / rectWidth));
+    let gridY = int((mouseY / rectHeight));
+    console.log(gridX, gridY);
+  }
+}
 
