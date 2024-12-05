@@ -4,20 +4,32 @@
 //
 // CAPSTONE PROJECT
 
+
+/////////////////GLOBAL VARIABLES///////////////////
+
 let NUM_ROWS = 4;
 let NUM_COLS = 4;
 let rectWidth, rectHeight;
 let currentRow, currentCol;
+
+
 let grid = [[0,0,0,0],
                    [0,0,0,0],
                    [0,0,0,0],
                    [0,0,0,0]];
 
+
 let sequence = []; //stores sequence in order
 let sequenceLength; //length of sequence, should increase with dififculty 
 
+
 let highlightDurationLength = 500;
 let highlightStartTime;
+let currentSquare = -1;
+let highlightElapsedTime;
+
+
+/////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
 
 function setup() {
   createCanvas(1000, 700);
@@ -55,18 +67,36 @@ function generateSequence() {
   console.log(sequence); //here for testing sequence generation
 }
 
-function highlightSequence() { //highlight squares, THIS FUNCTION IS WIP
-  for (let i = 0; i < sequenceLength; i++) {
-    let col = sequence[i][0];
-    let row = sequence[i][1];
-
-    highlightStartTime = millis();
-
-
-
-    fill(255);
-    rect(col * rectWidth, row * rectHeight, rectWidth, rectHeight);
+function highlightSequence() { //highlight squares, THIS FUNCTION IS WIP, needs complete rework to highlight sequentially
+  if (currentSquare >= 0 && currentSquare <= sequenceLength) {
+    let col = sequence[currentSquare][0];
+    let row = sequence[currentSquare][1];
+    highlightSquare(col, row);
   }
+
+  highlightStartTime = millis();
+  highlightElapsedTime = millis() - highlightStartTime;
+  
+  
+  
+  
+  
+  // for (let i = 0; i < sequenceLength; i++) {
+  //   let col = sequence[i][0];
+  //   let row = sequence[i][1];
+
+  //   highlightStartTime = millis();
+
+
+
+  //   fill(255);
+  //   rect(col * rectWidth, row * rectHeight, rectWidth, rectHeight);
+  // }
+}
+
+function highlightSquare(col, row) {
+  fill(255);
+  rect(col*rectWidth, row*rectHeight, rectWidth, rectHeight);
 }
 
 
