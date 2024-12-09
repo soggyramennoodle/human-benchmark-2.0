@@ -23,10 +23,12 @@ let sequence = []; //stores sequence in order
 let sequenceLength; //length of sequence, should increase with dififculty 
 
 
-let highlightDurationLength = 500;
+let highlightDurationLength = 650;
 let highlightStartTime;
 let currentSquare = -1;
 let highlightElapsedTime;
+let gameState = 1; //1 is  showing, 2 is inputting, 3 is ... THIS VARIABLE NEEDS WORK
+
 
 
 /////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
@@ -58,7 +60,7 @@ function drawGrid() {
 
 function generateSequence() {
   sequence = []; //empty sequence at start, want generation in setup
-  sequenceLength = 5; ///set length for testing
+  sequenceLength = 4; ///set length for testing
   for (let i = 0; i < sequenceLength; i ++) {
     let randomCol = int(random(0, NUM_COLS));
     let randomRow = int(random(0, NUM_ROWS));
@@ -68,30 +70,28 @@ function generateSequence() {
 }
 
 function highlightSequence() { //highlight squares, THIS FUNCTION IS WIP, needs complete rework to highlight sequentially
+  if (currentSquare === -1) {
+    currentSquare = 0;
+    highlightStartTime = millis();
+  }
+
   if (currentSquare >= 0 && currentSquare <= sequenceLength) {
     let col = sequence[currentSquare][0];
     let row = sequence[currentSquare][1];
-    highlightSquare(col, row);
+    highlightSquare(col, row); //grabs coordinates of a square in sequence, highlights the square.
   }
 
-  highlightStartTime = millis();
-  highlightElapsedTime = millis() - highlightStartTime;
-  
-  
-  
-  
-  
-  // for (let i = 0; i < sequenceLength; i++) {
-  //   let col = sequence[i][0];
-  //   let row = sequence[i][1];
+  if (millis() - highlightStartTime > highlightDurationLength) {
+    currentSquare++;
+    highlightStartTime = millis();
+  }
 
-  //   highlightStartTime = millis();
-
-
-
-  //   fill(255);
-  //   rect(col * rectWidth, row * rectHeight, rectWidth, rectHeight);
-  // }
+  if (currentSquare >= sequenceLength) {
+    currentSquare = 
+  }
+  
+  
+  
 }
 
 function highlightSquare(col, row) {
