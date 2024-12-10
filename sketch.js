@@ -12,23 +12,31 @@ let NUM_COLS = 4;
 let rectWidth, rectHeight;
 let currentRow, currentCol;
 
-
+//-----------GAME SETUP-------------
 let grid = [[0,0,0,0],
                    [0,0,0,0],
                    [0,0,0,0],
                    [0,0,0,0]];
-
-
 let sequence = []; //stores sequence in order
 let sequenceLength; //length of sequence, should increase with dififculty 
 
-
+//----------------HIGHLIGHTING-----------------
 let highlightDurationLength = 650;
 let highlightStartTime;
 let currentSquare = -1;
 let highlightElapsedTime;
+let highlightState = "off";
+let highlightOffDuration = 200;
+
+//------------------GAME STATES------------------
 let gameState = 1; //1 is  showing, 2 is inputting, 3 is ... THIS VARIABLE NEEDS WORK
 
+
+//---------------PLAYER INPUT-----------------
+let playerSequence = [];
+
+//---------------GAME DIFFICULTY---------------
+let gameDifficulty = 0;
 
 
 /////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
@@ -69,29 +77,35 @@ function generateSequence() {
   console.log(sequence); //here for testing sequence generation
 }
 
-function highlightSequence() { //highlight squares, THIS FUNCTION IS WIP, needs complete rework to highlight sequentially
-  if (currentSquare === -1) {
+function highlightSequence() { 
+  if (currentSquare === -1) { 
     currentSquare = 0;
     highlightStartTime = millis();
+    highlightState = "on";
   }
 
   if (currentSquare >= 0 && currentSquare <= sequenceLength) {
     let col = sequence[currentSquare][0];
     let row = sequence[currentSquare][1];
-    highlightSquare(col, row); //grabs coordinates of a square in sequence, highlights the square.
-  }
+    // highlightSquare(col, row); //grabs coordinates of a square in sequence, highlights the square.
+    if (highlightState === "on") {
+      highlightSquare(col, row);
 
-  if (millis() - highlightStartTime > highlightDurationLength) {
-    currentSquare++;
-    highlightStartTime = millis();
-  }
+      if (millis() - highlightStartTime > highlightDurationLength) {
+        highlightState = "off";
+        highlightStartTime = millis();
+      }
+    }
 
-  if (currentSquare >= sequenceLength) {
-    currentSquare = 
+    else if (highlightState === "off") {
+      if (millis() - highlightStartTime > highlightDurationLength) {
+        highlightState = "on";
+        currentSquare++;
+        highlightStartTime = millis();
+      }
+    }
   }
-  
-  
-  
+  //need to fix sequence checking even after sequence is over: error in console
 }
 
 function highlightSquare(col, row) {
