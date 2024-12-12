@@ -40,7 +40,6 @@ let playerSequence = [];
 //---------------GAME DIFFICULTY---------------
 let gameDifficulty = 0;
 
-
 /////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
 
 function preload() {
@@ -75,7 +74,7 @@ function draw() {
     text("Your turn!", width/2, height/2);
     }
 
-    else if (gameState === 3) {
+  else if (gameState === 3) {
     textSize(32);
     fill(255);
     textAlign(CENTER, CENTER);
@@ -154,8 +153,18 @@ function completeSequenceHighlight() {
 //---------------------------------------------------------------------------------------
 function mousePressed() {
   if (gameState === 2) {
-    //CONTINUE CODE FROM HERE, IMPLEMENTING PLAYER INPUT
+    if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height &&  playerSequence.length < sequenceLength) {
+      let col = int(mouseX/rectWidth);
+      let row = int(mouseY/rectHeight);
+
+      playerSequence.push([col, row]);
+    }
   }
+}
+
+function checkPlayerInput() {
+  let currentCheckedSquare = playerSequence.length - sequenceLength;
+
 }
 
 
