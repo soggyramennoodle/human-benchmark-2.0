@@ -11,6 +11,7 @@ let NUM_ROWS = 4;
 let NUM_COLS = 4;
 let rectWidth, rectHeight;
 let currentRow, currentCol;
+let customFont;
 
 //-----------GAME SETUP-------------
 let grid = [[0,0,0,0],
@@ -27,6 +28,7 @@ let currentSquare = -1;
 let highlightElapsedTime;
 let highlightState = "off";
 let highlightOffDuration = 200;
+let sequenceComplete = false;
 
 //------------------GAME STATES------------------
 let gameState = 1; //1 is  showing, 2 is inputting, 3 is ... THIS VARIABLE NEEDS WORK
@@ -41,22 +43,46 @@ let gameDifficulty = 0;
 
 /////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
 
+function preload() {
+  customFont = loadFont('assets/SFPRODISPLAYBOLD.OTF');
+}
+//---------------------------------------------------------------------------------------
 function setup() {
   createCanvas(1000, 700);
   rectWidth = width/NUM_COLS;
   rectHeight = height/NUM_ROWS;
   stroke(255);
+  textFont(customFont);
   generateSequence(); //generates sequence, need to find way to put in draw, to add onto sequence
 }
-
+//---------------------------------------------------------------------------------------
 function draw() {
   background(20);
   drawGrid();
-  highlightSequence();
   testCoordinate(); //testing coordinates of grid
   
-}
+  if (gameState === 1) {
+    highlightSequence();
+    if (sequenceComplete === true) {
+      console.log('Sequence highlighting complete. Expecting user input soon...')
+    }
+  }
 
+  else if (gameState === 2) {
+    textSize(64);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    text("Your turn!", width/2, height/2);
+    }
+
+    else if (gameState === 3) {
+    textSize(32);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    text("Game over! Click to restart", width/2, height/2); //need to eventually make a button to restart, rather than screen click
+    }
+  }
+//---------------------------------------------------------------------------------------
 function drawGrid() {
   for (let x = 0; x < NUM_COLS; x++) {
     for (let y = 0; y < NUM_ROWS; y++) {
@@ -65,7 +91,7 @@ function drawGrid() {
     }
   }
 }
-
+//---------------------------------------------------------------------------------------
 function generateSequence() {
   sequence = []; //empty sequence at start, want generation in setup
   sequenceLength = 4; ///set length for testing
@@ -76,20 +102,24 @@ function generateSequence() {
   }
   console.log(sequence); //here for testing sequence generation
 }
-
+//---------------------------------------------------------------------------------------
 function highlightSequence() { 
+  if (sequenceComplete === true) {
+    return;
+  }
+
   if (currentSquare === -1) { 
     currentSquare = 0;
     highlightStartTime = millis();
     highlightState = "on";
   }
 
-  if (currentSquare >= 0 && currentSquare <= sequenceLength) {
+  if (currentSquare >= 0 && currentSquare < sequenceLength) {
     let col = sequence[currentSquare][0];
     let row = sequence[currentSquare][1];
-    // highlightSquare(col, row); //grabs coordinates of a square in sequence, highlights the square.
+
     if (highlightState === "on") {
-      highlightSquare(col, row);
+      highlightSquare(col, row); //grabs coordinates of a square in sequence, highlights the square.
 
       if (millis() - highlightStartTime > highlightDurationLength) {
         highlightState = "off";
@@ -105,12 +135,27 @@ function highlightSequence() {
       }
     }
   }
-  //need to fix sequence checking even after sequence is over: error in console
-}
 
+  else if (currentSquare >= sequenceLength) {
+    completeSequenceHighlight();
+  }
+}
+//---------------------------------------------------------------------------------------
 function highlightSquare(col, row) {
   fill(255);
   rect(col*rectWidth, row*rectHeight, rectWidth, rectHeight);
+}
+//---------------------------------------------------------------------------------------
+function completeSequenceHighlight() {
+  sequenceComplete = true;
+  gameState = 2;
+  playerSequence = [];
+}
+//---------------------------------------------------------------------------------------
+function mousePressed() {
+  if (gameState === 2) {
+    //CONTINUE CODE FROM HERE, IMPLEMENTING PLAYER INPUT
+  }
 }
 
 
