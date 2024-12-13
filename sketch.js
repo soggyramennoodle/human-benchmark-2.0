@@ -74,7 +74,11 @@ function draw() {
     text("Your turn!", width/2, height/2);
     }
 
-  else if (gameState === 3) {
+    else if (gameState === 3) {
+      //check player input goes here...
+    }
+
+  else if (gameState === 4) {
     textSize(32);
     fill(255);
     textAlign(CENTER, CENTER);
@@ -164,7 +168,9 @@ function mousePressed() {
 
 function checkPlayerInput() {
   let currentCheckedSquare = playerSequence.length - sequenceLength;
+  if (gameState === 3) {
 
+  }
 }
 
 
