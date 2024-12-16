@@ -31,7 +31,12 @@ let highlightOffDuration = 200;
 let sequenceComplete = false;
 
 //------------------GAME STATES------------------
-let gameState = 1; //1 is  showing, 2 is inputting, 3 is ... THIS VARIABLE NEEDS WORK
+let gameState = 1; 
+//1 = show sequence
+//2 = transition to show "your turn"
+//3 player input
+//4 transition to check playerSequence
+//5 either reset or continue, etc...
 
 
 //---------------PLAYER INPUT-----------------
@@ -47,7 +52,7 @@ function preload() {
 }
 //---------------------------------------------------------------------------------------
 function setup() {
-  createCanvas(1000, 700);
+  createCanvas(800, 700);
   rectWidth = width/NUM_COLS;
   rectHeight = height/NUM_ROWS;
   stroke(255);
@@ -166,12 +171,13 @@ function mousePressed() {
   }
 }
 
-function checkPlayerInput() {
+function checkPlayerInput() { //THIS FUNCTION IS WIP
   let currentCheckedSquare = playerSequence.length - sequenceLength;
   if (gameState === 3) {
 
   }
 }
+
 
 
 
