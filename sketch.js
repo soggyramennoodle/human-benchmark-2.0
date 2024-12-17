@@ -45,6 +45,10 @@ let playerSequence = [];
 //---------------GAME DIFFICULTY---------------
 let gameDifficulty = 0;
 
+//-------------MESSAGE VARIABLES---------------
+let messageTimerStart = millis();
+let messageShowDuration = 1000;
+
 /////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
 
 function preload() {
@@ -63,33 +67,35 @@ function setup() {
 function draw() {
   background(20);
   drawGrid();
-  testCoordinate(); //testing coordinates of grid
   
+  //game state handling (might move to function)
   if (gameState === 1) {
     highlightSequence();
-    if (sequenceComplete === true) {
-      console.log('Sequence highlighting complete. Expecting user input soon...')
+    displayMessage("Watch Carefully");
+
+  //   if (sequenceComplete === true) {
+  //     console.log('Sequence highlighting complete. Expecting user input soon...');                                         //NOT PART OF PROGRAM
+  //   }
+  // }
+  }
+  else if (gameState === 2) {
+    displayMessage("Your Turn");
+    if (millis() - messageTimerStart > messageShowDuration ) {
+      gameState = 3;
     }
   }
 
-  else if (gameState === 2) {
-    textSize(64);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    text("Your turn!", width/2, height/2);
-    }
-
-    else if (gameState === 3) {
-      //check player input goes here...
-    }
+  else if (gameState === 3) {
+    // checkPlayerInput();
+  }
 
   else if (gameState === 4) {
     textSize(32);
     fill(255);
     textAlign(CENTER, CENTER);
     text("Game over! Click to restart", width/2, height/2); //need to eventually make a button to restart, rather than screen click
-    }
   }
+}
 //---------------------------------------------------------------------------------------
 function drawGrid() {
   for (let x = 0; x < NUM_COLS; x++) {
@@ -172,12 +178,16 @@ function mousePressed() {
 }
 
 function checkPlayerInput() { //THIS FUNCTION IS WIP
-  let currentCheckedSquare = playerSequence.length - sequenceLength;
-  if (gameState === 3) {
-
-  }
+  let currentCheckedSquare = playerSequence.length - 1;
+  if (playerSequence[currentCheckedSquare][0] !== player)
 }
-
+//-------------------------------------------------------------------------------------------
+function displayMessage(message) { //may need to figure out how to put this into html/css for better design
+  textAlign(CENTER, CENTER);
+  fill(255);
+  textSize(32);
+  text(message, width/2, height/2);
+}
 
 
 
@@ -186,8 +196,8 @@ function checkPlayerInput() { //THIS FUNCTION IS WIP
 
 function testCoordinate() { //used to test grid coordinate system
   if (mouseX >=0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-    let gridX = int((mouseX / rectWidth));
-    let gridY = int((mouseY / rectHeight));
+    let gridX = int(mouseX / rectWidth);
+    let gridY = int(mouseY / rectHeight);
     console.log(gridX, gridY);
   }
 }
