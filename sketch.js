@@ -46,7 +46,7 @@ let playerSequence = [];
 let gameDifficulty = 0;
 
 //-------------MESSAGE VARIABLES---------------
-let messageTimerStart = millis();
+let messageTimerStart;
 let messageShowDuration = 1000;
 
 /////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
@@ -62,6 +62,7 @@ function setup() {
   stroke(255);
   textFont(customFont);
   generateSequence(); //generates sequence, need to find way to put in draw, to add onto sequence
+  messageTimerStart = millis();
 }
 //---------------------------------------------------------------------------------------
 function draw() {
@@ -85,16 +86,19 @@ function draw() {
     }
   }
 
-  else if (gameState === 3) {
-    // checkPlayerInput();
-  }
-
   else if (gameState === 4) {
     textSize(32);
     fill(255);
     textAlign(CENTER, CENTER);
     text("Game over! Click to restart", width/2, height/2); //need to eventually make a button to restart, rather than screen click
   }
+
+  else if (gameState === 5) {
+    displayMessage("Uh oh!");
+    if (millis() - messageTimerStart > 2000) {
+      resetGame();
+  }
+}
 }
 //---------------------------------------------------------------------------------------
 function drawGrid() {
@@ -167,19 +171,27 @@ function completeSequenceHighlight() {
 }
 //---------------------------------------------------------------------------------------
 function mousePressed() {
-  if (gameState === 2) {
+  if (gameState === 3) {
     if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height &&  playerSequence.length < sequenceLength) {
       let col = int(mouseX/rectWidth);
       let row = int(mouseY/rectHeight);
 
       playerSequence.push([col, row]);
+      checkPlayerInput();
     }
   }
 }
 
-function checkPlayerInput() { //THIS FUNCTION IS WIP
-  let currentCheckedSquare = playerSequence.length - 1;
-  if (playerSequence[currentCheckedSquare][0] !== player)
+function checkPlayerInput() { //THIS FUNCTION IS WIP ISSUE IS HERE
+  let currentCheckedSquare = playerSequence.length -1;
+  if (playerSequence[currentCheckedSquare][0] !==  sequence[currentCheckedSquare][0] && playerSequence[currentCheckedSquare][1] !== sequence[currentCheckedSquare][1]) {
+    gameState = 5;
+    messageTimerStart = millis();
+    return;
+  }
+  else if (playerSequence.length === sequenceLength) {
+    console.log("Sequences match, moving to next phase...")
+  }
 }
 //-------------------------------------------------------------------------------------------
 function displayMessage(message) { //may need to figure out how to put this into html/css for better design
@@ -189,6 +201,15 @@ function displayMessage(message) { //may need to figure out how to put this into
   text(message, width/2, height/2);
 }
 
+function resetGame() {
+  sequence = [];
+  playerSequence = [];
+  sequenceLength = 4;
+  sequenceComplete = false;
+  currentSquare = -1;
+  gameState = 1;
+  generateSequence();
+}
 
 
 
