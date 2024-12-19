@@ -97,8 +97,8 @@ function draw() {
     displayMessage("Uh oh!");
     if (millis() - messageTimerStart > 2000) {
       resetGame();
+    }
   }
-}
 }
 //---------------------------------------------------------------------------------------
 function drawGrid() {
