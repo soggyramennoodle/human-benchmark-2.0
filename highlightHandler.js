@@ -49,6 +49,5 @@ function highlightSequence() {
   
   function completeSequenceHighlight() {
     sequenceComplete = true;
-    gameState = 2;
     playerSequence = [];
   }

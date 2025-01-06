@@ -5,16 +5,21 @@ function gameStateHandler() {
         highlightSequence();
         displayMessage("Watch Carefully");
     
-      //   if (sequenceComplete === true) {
-      //     console.log('Sequence highlighting complete. Expecting user input soon...');                                         //NOT PART OF PROGRAM
-      //   }
-      // }
+        if (sequenceComplete === true) {
+          messageTimerStart = millis();
+          gameState = 2;
+        }
       }
+
       else if (gameState === 2) {
         displayMessage("Your Turn");
         if (millis() - messageTimerStart > messageShowDuration ) {
           gameState = 3;
         }
+      }
+
+      else if (gameState === 3) {
+        //player input state here
       }
     
       else if (gameState === 4) {
