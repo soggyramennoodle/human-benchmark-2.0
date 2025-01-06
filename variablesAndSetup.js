@@ -60,10 +60,16 @@ function setup() {
 }
 
 function drawGrid() {
-    for (let x = 0; x < NUM_COLS; x++) {
-      for (let y = 0; y < NUM_ROWS; y++) {
-        fill(grid[y][x]);
-        rect(x*rectWidth, y*rectHeight, rectWidth, rectHeight);
+  for (let x = 0; x < NUM_COLS; x++) {
+    for (let y = 0; y < NUM_ROWS; y++) {
+      if (grid[y][x] > 0) {
+        grid[y][x] -= 1;
+        fill(255);
       }
+      else {
+        fill(grid[y][x]);
+      }
+      rect(x*rectWidth, y*rectHeight, rectWidth, rectHeight);
     }
   }
+}

@@ -11,14 +11,14 @@ function draw() {
 //---------------------------------------------------------------------------------------
 
 function generateSequence() {
-  sequence = [];                                                                   //empty sequence at start, generation occurs in setup()
-  sequenceLength = 4;                                                                                     ///CONSTANT length for testing
+  sequence = [];  //empty sequence at start, generation occurs in setup()
+  sequenceLength = 4; ///CONSTANT length for testing; will change with difficulty
   for (let i = 0; i < sequenceLength; i ++) {
     let randomCol = int(random(0, NUM_COLS));
     let randomRow = int(random(0, NUM_ROWS));
     sequence.push([randomCol, randomRow]);
   }
-  console.log(sequence);                                                                      //here to allow troubleshooting related to sequence
+  console.log(sequence); //here for debugging purposes
 }
 
 //---------------------------------------------------------------------------------------
@@ -30,12 +30,13 @@ function mousePressed() {
       let row = int(mouseY/rectHeight);
 
       playerSequence.push([col, row]);
+      grid[row][col] = 15;
       checkPlayerInput();
     }
   }
 }
 
-function checkPlayerInput() { //THIS FUNCTION IS WIP ISSUE IS HERE
+function checkPlayerInput() { 
   let currentCheckedSquare = playerSequence.length -1;
 
   if (playerSequence[currentCheckedSquare][0] !==  sequence[currentCheckedSquare][0] || playerSequence[currentCheckedSquare][1] !== sequence[currentCheckedSquare][1]) {
@@ -44,7 +45,7 @@ function checkPlayerInput() { //THIS FUNCTION IS WIP ISSUE IS HERE
     return;
   }
   else if (playerSequence.length === sequenceLength) {
-    console.log("Sequences match, moving to next phase...")
+    console.log("Sequences match, moving to next phase...");
     gameState = 4; //ends the game here for extremely basic functionality, but we want the game to continue with harder sequences.
   }
 }
