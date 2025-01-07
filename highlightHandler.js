@@ -17,13 +17,12 @@ function highlightSequence() {
 
     if (highlightState === "on") {
       highlightSquare(col, row); //grabs coordinates of a square in sequence, highlights the square.
-
       if (millis() - highlightStartTime > highlightDurationLength) {
         highlightState = "off";
         highlightStartTime = millis();
       }
     }
-
+    
     else if (highlightState === "off") {
       if (millis() - highlightStartTime > highlightDurationLength) {
         highlightState = "on";

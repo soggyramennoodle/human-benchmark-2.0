@@ -12,7 +12,6 @@ function draw() {
 
 function generateSequence() {
   sequence = [];  //empty sequence at start, generation occurs in setup()
-  sequenceLength = 4; ///CONSTANT length for testing; will change with difficulty
   for (let i = 0; i < sequenceLength; i ++) {
     let randomCol = int(random(0, NUM_COLS));
     let randomRow = int(random(0, NUM_ROWS));
@@ -28,7 +27,6 @@ function mousePressed() {
     if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height &&  playerSequence.length < sequenceLength) {
       let col = int(mouseX/rectWidth);
       let row = int(mouseY/rectHeight);
-
       playerSequence.push([col, row]);
       grid[row][col] = 15;
       checkPlayerInput();
@@ -38,15 +36,19 @@ function mousePressed() {
 
 function checkPlayerInput() { 
   let currentCheckedSquare = playerSequence.length -1;
-
   if (playerSequence[currentCheckedSquare][0] !==  sequence[currentCheckedSquare][0] || playerSequence[currentCheckedSquare][1] !== sequence[currentCheckedSquare][1]) {
-    gameState = 5;
+    gameState = 5; //game over state
     messageTimerStart = millis();
     return;
   }
+
   else if (playerSequence.length === sequenceLength) {
     console.log("Sequences match, moving to next phase...");
-    gameState = 4; //ends the game here for extremely basic functionality, but we want the game to continue with harder sequences.
+    sequenceLength++;
+    sequenceComplete = false;
+    currentSquare = -1;
+    generateSequence();
+    gameState = 1; //back to start to show new sequence.
   }
 }
 
@@ -62,7 +64,7 @@ function displayMessage(message) { //may need to figure out how to put this into
 function resetGame() {
   sequence = [];
   playerSequence = [];
-  sequenceLength = 4;
+  sequenceLength = 1;
   sequenceComplete = false;
   currentSquare = -1;
   gameState = 1;

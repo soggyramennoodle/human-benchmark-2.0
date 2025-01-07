@@ -22,12 +22,8 @@ function gameStateHandler() {
     //player input phase
   }
 
-  else if (gameState === 4) {
-    textSize(32);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    text("Game over! Click to restart", width/2, height/2); //need to eventually make a button to restart, rather than screen click
-  }
+  //i had gameState 4 here, but because the difficulty increase works, there is no point in having game over, restart, since the game
+  //continues until the player loses, hence going to state 5. 
 
   else if (gameState === 5) {
     displayMessage("Uh oh!");

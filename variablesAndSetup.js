@@ -1,18 +1,16 @@
 //This file holds all the global variables, as well as preload, and setup.
 
-let NUM_ROWS = 4;
-let NUM_COLS = 4;
+let NUM_ROWS = 2;
+let NUM_COLS = 2;
 let rectWidth, rectHeight;
 let currentRow, currentCol;
 let customFont;
 
 //-----------GAME SETUP-------------
-let grid = [[0,0,0,0],
-                   [0,0,0,0],
-                   [0,0,0,0],
-                   [0,0,0,0]];
+let grid = []; //needs to start empty, to enable dynamic changing during game. initial setup in setup().
 let sequence = []; //stores sequence in order
-let sequenceLength; //length of sequence, should increase with dififculty 
+let playerSequence = [];
+let sequenceLength = 1; //length of sequence, should increase with dififculty 
 
 //----------------HIGHLIGHTING-----------------
 let highlightDurationLength = 650;
@@ -31,13 +29,6 @@ let gameState = 1;
 //4 transition to check playerSequence
 //5 either reset or continue, etc...
 
-
-//---------------PLAYER INPUT-----------------
-let playerSequence = [];
-
-//---------------GAME DIFFICULTY---------------
-let gameDifficulty = 0;
-
 //-------------MESSAGE VARIABLES---------------
 let messageTimerStart;
 let messageShowDuration = 1000;
@@ -50,13 +41,24 @@ function preload() {
 
 
 function setup() {
-  createCanvas(800, 700);
+  createCanvas(800, 800);
   rectWidth = width/NUM_COLS;
   rectHeight = height/NUM_ROWS;
   stroke(255);
   textFont(customFont);
+  initializeGrid();
   generateSequence(); //generates sequence, need to find way to put in draw, to add onto sequence
   messageTimerStart = millis();
+}
+
+function initializeGrid() {
+  for (let y = 0; y < NUM_ROWS; y++) {
+    let row = [];
+    for (let x = 0; x < NUM_COLS; x++) {
+      row.push(0);
+    }
+    grid.push(row);
+  }
 }
 
 function drawGrid() {
@@ -64,10 +66,10 @@ function drawGrid() {
     for (let y = 0; y < NUM_ROWS; y++) {
       if (grid[y][x] > 0) {
         grid[y][x] -= 1;
-        fill(255);
+        fill(grid[y][x] * 17);
       }
       else {
-        fill(grid[y][x]);
+        fill(20);
       }
       rect(x*rectWidth, y*rectHeight, rectWidth, rectHeight);
     }
