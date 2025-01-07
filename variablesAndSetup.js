@@ -31,12 +31,14 @@ let gameState = 1;
 
 //-------------MESSAGE VARIABLES---------------
 let messageTimerStart;
-let messageShowDuration = 1000;
+let messageShowDuration = 2000;
+let currentTextX;
+let currentTextY;
 
 /////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
 
 function preload() {
-  customFont = loadFont('assets/SFPRODISPLAYBOLD.OTF');
+  customFont = loadFont('assets/SCHABO-Condensed.otf');
 }
 
 
@@ -44,6 +46,8 @@ function setup() {
   createCanvas(800, 800);
   rectWidth = width/NUM_COLS;
   rectHeight = height/NUM_ROWS;
+  currentTextX = width/2;
+  currentTextY = 0;
   stroke(255);
   textFont(customFont);
   initializeGrid();

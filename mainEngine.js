@@ -48,7 +48,8 @@ function checkPlayerInput() {
     sequenceComplete = false;
     currentSquare = -1;
     generateSequence();
-    gameState = 1; //back to start to show new sequence.
+    gameState = 6; //go to delay state, to transition to another phase.
+    messageTimerStart = millis();
   }
 }
 
@@ -57,8 +58,10 @@ function checkPlayerInput() {
 function displayMessage(message) { //may need to figure out how to put this into html/css for better design
   textAlign(CENTER, CENTER);
   fill(255);
-  textSize(32);
-  text(message, width/2, height/2);
+  textSize(75);
+  currentTextX = lerp(currentTextX, width/2, 0.05);
+  currentTextY = lerp(currentTextY, height/6.5, 0.05); //easing into screen only works at very beginning, need to find a way to make it work throughout.
+  text(message, currentTextX, currentTextY);
 }
 
 function resetGame() {
