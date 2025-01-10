@@ -48,6 +48,7 @@ function checkPlayerInput() {
     sequenceComplete = false;
     currentSquare = -1;
     generateSequence();
+    sequencesCorrectAtCurrentGrid++;
     gameState = 6; //go to delay state, to transition to another phase.
     messageTimerStart = millis();
   }
@@ -80,6 +81,12 @@ function resetGame() {
   generateSequence();
 }
 
+function difficultyChange() {
+  if (sequencesCorrectAtCurrentGrid === 3) {
+    currentGridSize++;
+    console.log('CHECK');
+  }
+}
 
 
 ///////////////////////--------TESTING CORNER-----------//////////////////////////

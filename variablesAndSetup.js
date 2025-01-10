@@ -11,8 +11,6 @@ let grid = []; //needs to start empty, to enable dynamic changing during game. i
 let sequence = []; //stores sequence in order
 let playerSequence = [];
 let sequenceLength = 1; //length of sequence, should increase with dififculty 
-let currentGridSize = 2;
-
 //----------------HIGHLIGHTING-----------------
 let highlightDurationLength = 650;
 let highlightStartTime;
@@ -38,6 +36,8 @@ let currentTextY;
 let lastMessage = '';
 
 //============DIFFICULTY VARIABLES================
+let currentGridSize = 2;
+let sequencesCorrectAtCurrentGrid = 0;
 
 
 /////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
@@ -58,6 +58,7 @@ function setup() {
   stroke(255);
   textFont(customFont);
   initializeGrid();
+  
   generateSequence(); //generates sequence, need to find way to put in draw, to add onto sequence
   messageTimerStart = millis();
 }
@@ -68,7 +69,7 @@ function initializeGrid() {
     for (let x = 0; x < NUM_COLS; x++) {
       row.push(0);
     }
-    grid.push(row);
+    grid.push(row); 
   }
 }
 
@@ -86,3 +87,5 @@ function drawGrid() {
     }
   }
 }
+
+
