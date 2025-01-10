@@ -1,7 +1,7 @@
 //This file holds all the global variables, as well as preload, and setup.
 
-let NUM_ROWS = 2;
-let NUM_COLS = 2;
+let NUM_ROWS;
+let NUM_COLS ;
 let rectWidth, rectHeight;
 let currentRow, currentCol;
 let customFont;
@@ -11,6 +11,7 @@ let grid = []; //needs to start empty, to enable dynamic changing during game. i
 let sequence = []; //stores sequence in order
 let playerSequence = [];
 let sequenceLength = 1; //length of sequence, should increase with dififculty 
+let currentGridSize = 2;
 
 //----------------HIGHLIGHTING-----------------
 let highlightDurationLength = 650;
@@ -31,14 +32,17 @@ let gameState = 1;
 
 //-------------MESSAGE VARIABLES---------------
 let messageTimerStart;
-let messageShowDuration = 2000;
+let messageShowDuration = 3000;
 let currentTextX;
 let currentTextY;
+let lastMessage = '';
 
 /////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
 
 function preload() {
   customFont = loadFont('assets/SCHABO-Condensed.otf');
+  NUM_COLS = currentGridSize;
+  NUM_ROWS = currentGridSize; //able to scale grid size with this variable
 }
 
 

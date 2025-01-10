@@ -56,6 +56,12 @@ function checkPlayerInput() {
 //-------------------------------------------------------------------------------------------
 
 function displayMessage(message) { //may need to figure out how to put this into html/css for better design
+  if (message !== lastMessage) {
+    currentTextX = width/2;
+    currentTextY = 0;
+    lastMessage = message;
+  }
+
   textAlign(CENTER, CENTER);
   fill(255);
   textSize(75);

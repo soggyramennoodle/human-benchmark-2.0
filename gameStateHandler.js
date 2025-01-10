@@ -34,7 +34,7 @@ function gameStateHandler() {
 
   else if (gameState === 6) { //delay phase after player input
     displayMessage("Correct! Get Ready...");
-    if (millis() - messageTimerStart > 1000) {
+    if (millis() - messageTimerStart > 2000) {
       gameState = 1;
     }
   }
