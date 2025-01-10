@@ -63,7 +63,7 @@ function displayMessage(message) { //may need to figure out how to put this into
   }
 
   textAlign(CENTER, CENTER);
-  fill(255);
+  fill(149, 6, 6);
   textSize(75);
   currentTextX = lerp(currentTextX, width/2, 0.05);
   currentTextY = lerp(currentTextY, height/6.5, 0.05); //easing into screen only works at very beginning, need to find a way to make it work throughout.

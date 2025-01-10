@@ -37,6 +37,9 @@ let currentTextX;
 let currentTextY;
 let lastMessage = '';
 
+//============DIFFICULTY VARIABLES================
+
+
 /////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
 
 function preload() {
