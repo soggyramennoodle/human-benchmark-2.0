@@ -1,5 +1,6 @@
 //Adeeb Rahman
 //CS30 Capstone Project
+//This file stores all the core functions of the game.
 
 
 function draw() {
