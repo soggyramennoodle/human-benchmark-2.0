@@ -13,10 +13,12 @@ function draw() {
 function generateSequence() {
   sequence = [];  //empty sequence at start, generation occurs in setup()
   for (let i = 0; i < sequenceLength; i ++) {
-    let randomCol = int(random(0, NUM_COLS));
-    let randomRow = int(random(0, NUM_ROWS));
+    let randomCol = int(random(0, currentGridSize));
+    let randomRow = int(random(0, currentGridSize));
     sequence.push([randomCol, randomRow]);
   }
+  sequenceComplete = false;
+  currentSquare = -1;
   console.log(sequence); //here for debugging purposes
 }
 
@@ -45,13 +47,37 @@ function checkPlayerInput() {
   else if (playerSequence.length === sequenceLength) {
     console.log("Sequences match, moving to next phase...");
     sequenceLength++;
+
+    if (sequenceLength >  currentGridSize*currentGridSize) {
+      increaseGridSize();
+    }
+
+    else {
     sequenceComplete = false;
     currentSquare = -1;
     generateSequence();
-    sequencesCorrectAtCurrentGrid++;
     gameState = 6; //go to delay state, to transition to another phase.
     messageTimerStart = millis();
+    }
   }
+}
+
+function increaseGridSize() {
+  //increases grid size
+  currentGridSize++;
+  rectWidth = width/currentGridSize;
+  rectHeight = height/currentGridSize;
+  initializeGrid();
+
+  //resets sequence, almost fresh start of game, but not really
+  sequenceLength = 1;
+  playerSequence = [];
+  sequence = []; 
+  generateSequence();
+  sequenceComplete = false;
+  currentSquare = -1;
+  gameState = 6; //to delay to show new sequence on new grid
+  messageTimerStart = millis();
 }
 
 //-------------------------------------------------------------------------------------------
@@ -72,20 +98,19 @@ function displayMessage(message) { //may need to figure out how to put this into
 }
 
 function resetGame() {
+  //have to reset grid size, sequence, playerSequence, everything back to original
+  currentGridSize = 2;
+  rectWidth = width/currentGridSize;
+  rectHeight = height/currentGridSize;
+
   sequence = [];
   playerSequence = [];
   sequenceLength = 1;
   sequenceComplete = false;
   currentSquare = -1;
   gameState = 1;
+  initializeGrid();
   generateSequence();
-}
-
-function difficultyChange() {
-  if (sequencesCorrectAtCurrentGrid === 3) {
-    currentGridSize++;
-    console.log('CHECK');
-  }
 }
 
 

@@ -2,11 +2,19 @@
 
 function gameStateHandler() {
   if (gameState === 1) { //show sequence
-    highlightSequence();
+    if (readingDelayState === "off") {
+      readingDelayStartTime = millis();
+      readingDelayState = "on";
+    }
     displayMessage("Watch Carefully");
+
+    if (millis() - readingDelayStartTime > readingDelay) {
+      highlightSequence(); //allows user to read text on screen, before highlighting begins, to make game less painful
+    }
 
     if (sequenceComplete === true) {
       messageTimerStart = millis();
+      readingDelayState = "off";
       gameState = 2;
     }
   }
@@ -35,6 +43,7 @@ function gameStateHandler() {
   else if (gameState === 6) { //delay phase after player input
     displayMessage("Correct! Get Ready...");
     if (millis() - messageTimerStart > 2000) {
+      readingDelayState = "off";
       gameState = 1;
     }
   }
