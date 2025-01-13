@@ -61,11 +61,11 @@ function checkPlayerInput() {
     }
 
     else {
-    sequenceComplete = false;
-    currentSquare = -1;
-    extendSequence();
-    gameState = 6; //go to delay state, to transition to another phase.
-    messageTimerStart = millis();
+      sequenceComplete = false;
+      currentSquare = -1;
+      extendSequence();
+      gameState = 6; //go to delay state, to transition to another phase.
+      messageTimerStart = millis();
     }
   }
 }
@@ -77,11 +77,12 @@ function increaseGridSize() {
   rectHeight = height/currentGridSize;
   initializeGrid();
 
-  //resets sequence, almost fresh start of game, but not really
-  sequenceLength = 1;
-  playerSequence = [];
-  sequence = []; 
-  generateInitialSequence();
+  while (sequence.length < sequenceLength) {
+    let randomCol = int(random(0, currentGridSize));
+    let randomRow = int(random(0, currentGridSize));
+    sequence.push([randomCol, randomRow]);
+  }
+
   sequenceComplete = false;
   currentSquare = -1;
   gameState = 6; //to delay to show new sequence on new grid
