@@ -11,7 +11,7 @@ function draw() {
 
 //---------------------------------------------------------------------------------------
 
-function generateSequence() {
+function generateInitialSequence() { //this function generates a sequence at the beginning of the game
   sequence = [];  //empty sequence at start, generation occurs in setup()
   for (let i = 0; i < sequenceLength; i ++) {
     let randomCol = int(random(0, currentGridSize));
@@ -20,6 +20,13 @@ function generateSequence() {
   }
   sequenceComplete = false;
   currentSquare = -1;
+  console.log(sequence); //here for debugging purposes
+}
+
+function extendSequence() { //this function adds to the sequence, as the player progresses
+  let randomCol = int(random(0, currentGridSize));
+  let randomRow = int(random(0, currentGridSize));
+  sequence.push([randomCol, randomRow]);
   console.log(sequence); //here for debugging purposes
 }
 
@@ -56,7 +63,7 @@ function checkPlayerInput() {
     else {
     sequenceComplete = false;
     currentSquare = -1;
-    generateSequence();
+    extendSequence();
     gameState = 6; //go to delay state, to transition to another phase.
     messageTimerStart = millis();
     }
@@ -74,7 +81,7 @@ function increaseGridSize() {
   sequenceLength = 1;
   playerSequence = [];
   sequence = []; 
-  generateSequence();
+  generateInitialSequence();
   sequenceComplete = false;
   currentSquare = -1;
   gameState = 6; //to delay to show new sequence on new grid
@@ -111,7 +118,7 @@ function resetGame() {
   currentSquare = -1;
   gameState = 1;
   initializeGrid();
-  generateSequence();
+  generateInitialSequence();
 }
 
 

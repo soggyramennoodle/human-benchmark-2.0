@@ -30,7 +30,7 @@ function gameStateHandler() {
     //player input phase
   }
 
-  //i had gameState 4 here, but because the difficulty increase works, there is no point in having game over, restart, since the game
+  //had gameState 4 here, but because the difficulty increase works, there is no point in having game over, restart, since the game
   //continues until the player loses, hence going to state 5. 
 
   else if (gameState === 5) { //if player input is wrong

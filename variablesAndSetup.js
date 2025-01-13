@@ -53,7 +53,7 @@ function setup() {
   stroke(255);
   textFont(customFont);
   initializeGrid();
-  generateSequence(); //generates sequence, need to find way to put in draw, to add onto sequence
+  generateInitialSequence(); //generates sequence, need to find way to put in draw, to add onto sequence
   messageTimerStart = millis();
 }
 
