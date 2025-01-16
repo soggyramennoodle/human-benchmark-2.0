@@ -38,6 +38,7 @@ function mousePressed() {
       let col = int(mouseX/rectWidth);
       let row = int(mouseY/rectHeight);
       playerSequence.push([col, row]);
+      inputSound.play();
       grid[row][col] = 15;
       checkPlayerInput();
     }

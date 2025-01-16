@@ -44,6 +44,9 @@ let customFont;
 
 function preload() {
   customFont = loadFont('assets/SCHABO-Condensed.otf');
+  attentionSound = loadSound('assets/Attention to Sequence.mp3');
+  inputSound = loadSound('assets/Clicking Sequence.ogg');
+  showingSound = loadSound('assets/Showing Sequence.mp3');
 }
 
 function setup() {

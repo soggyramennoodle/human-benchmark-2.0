@@ -9,6 +9,7 @@ function highlightSequence() {
     currentSquare = 0;
     highlightStartTime = millis();
     highlightState = "on";
+    showingSound.play(); 
   }
 
   if (currentSquare >= 0 && currentSquare < sequenceLength) {
@@ -26,6 +27,7 @@ function highlightSequence() {
     else if (highlightState === "off") {
       if (millis() - highlightStartTime > highlightDurationLength) {
         highlightState = "on";
+        showingSound.play(); 
         currentSquare++;
         highlightStartTime = millis();
       }

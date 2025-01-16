@@ -5,11 +5,13 @@ function gameStateHandler() {
     if (readingDelayState === "off") {
       readingDelayStartTime = millis();
       readingDelayState = "on";
+      attentionSound.play();
     }
     displayMessage("Watch Carefully");
 
     if (millis() - readingDelayStartTime > readingDelay) {
       highlightSequence(); //allows user to read text on screen, before highlighting begins, to make game less painful
+
     }
 
     if (sequenceComplete === true) {
