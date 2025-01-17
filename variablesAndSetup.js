@@ -35,7 +35,7 @@ let gameState = 1;
 //6 delay
 
 //==================VARIABLES RELATED TO MESSAGES==================
-let messageTimerStart;
+let messageTimerStart; 
 let messageShowDuration = 3000;
 let currentTextX;
 let currentTextY;
