@@ -1,5 +1,15 @@
 //This file holds all the global variables, as well as preload, and setup.
 
+//================VARIABLES RELATED TO UI==================
+let menuTitle;
+let menuButtonX;
+let menuButtonY;
+let menuButtonWidth;
+let menuButtonHeight;
+let menuEaseX;
+let menuEaseY;
+let startTransition = false;
+
 //==================VARIABLES RELATED TO GRID AND SCALING==================
 let currentGridSize = 2;
 let sequenceLength = 1; //length of sequence, should increase with dififculty 
@@ -59,6 +69,7 @@ function setup() {
   generateInitialSequence(); //generates sequence, need to find way to put in draw, to add onto sequence
   messageTimerStart = millis();
 }
+
 
 function initializeGrid() {
   grid = [];

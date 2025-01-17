@@ -5,7 +5,6 @@ function gameStateHandler() {
     if (readingDelayState === "off") {
       readingDelayStartTime = millis();
       readingDelayState = "on";
-      attentionSound.play();
     }
     displayMessage("Watch Carefully");
 

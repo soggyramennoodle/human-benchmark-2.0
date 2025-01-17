@@ -18,6 +18,11 @@ rather than just clicking the correct squares that light up.
 Optional Features:
 This game would be ideal if it had:
 2.1. Sounds when the sequence is being shown per square.
+  - click sound
+  - sound when text comes down from screen to grab attention
+  - sound when sequence is correct
+  -sound when sequence is wrong
+  - sound when highlighting squares
 2.1.1. Therefore, it should also have sound when the user clicks a square.
 2.3. A menu screen that could set the base for adding other games.
 
