@@ -6,8 +6,8 @@ let menuButtonX;
 let menuButtonY;
 let menuButtonWidth;
 let menuButtonHeight;
-let menuEaseX;
-let menuEaseY;
+let menuTitleX;
+let menuTitleY;
 let startTransition = false;
 
 //==================VARIABLES RELATED TO GRID AND SCALING==================
@@ -26,7 +26,7 @@ let highlightState = "off";
 let sequenceComplete = false;
 
 //==================VARIABLES RELATED TO GAMESTATE==================
-let gameState = 1; 
+let gameState = 0; 
 //1 = show sequence
 //2 = transition to show "your turn"
 //3 player input
@@ -57,6 +57,8 @@ function preload() {
   attentionSound = loadSound('assets/Attention to Sequence.mp3');
   inputSound = loadSound('assets/Clicking Sequence.ogg');
   showingSound = loadSound('assets/Showing Sequence.mp3');
+  correctSound = loadSound('assets/Correct Sequence.wav')
+  incorrectSound = loadSound('assets/Incorrect Sequence.wav');
 }
 
 function setup() {
@@ -68,8 +70,44 @@ function setup() {
   initializeGrid();
   generateInitialSequence(); //generates sequence, need to find way to put in draw, to add onto sequence
   messageTimerStart = millis();
+  initializeMenu();
 }
 
+function drawMenu() {
+  background(20);
+  textAlign(CENTER, CENTER);
+
+  //for the title
+  textSize(64);
+  fill(225);
+  text('Brain Trainer', menuTitleX, menuTitleY);
+
+  //for the button
+  textSize(32);
+  fill(100, 106, 113);
+  rect(menuButtonX, menuTitleY + 100, menuButtonWidth, menuButtonHeight, 10);
+  fill(255);
+  text('Start', menuButtonX + menuButtonWidth/2, menuTitleY + menuButtonHeight/2 + 100);
+
+
+  if (startTransition === true) {
+    menuTitleX = lerp(menuTitleX, width/2, 0.05);
+    menuTitleY = lerp(menuTitleY, height + 200, 0.05);
+    if (menuTitleY > height + 100) {
+      gameState = 1;
+    }
+  }
+}
+
+function initializeMenu() {
+  menuTitle = 'Brain Trainer';
+  menuButtonWidth = 200;
+  menuButtonHeight = 50;
+  menuButtonX = width/2 - menuButtonWidth / 2;
+  menuTitleX = width/2;
+  menuTitleY = height/3;
+  menuButtonY = menuTitleY + 100;
+}
 
 function initializeGrid() {
   grid = [];

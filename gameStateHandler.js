@@ -1,10 +1,14 @@
 //Handles gameStates
 
 function gameStateHandler() {
-  if (gameState === 1) { //show sequence
+  if (gameState === 0) {
+    drawMenu();
+  }
+  else if (gameState === 1) { //show sequence
     if (readingDelayState === "off") {
       readingDelayStartTime = millis();
       readingDelayState = "on";
+      attentionSound.play();
     }
     displayMessage("Watch Carefully");
 
@@ -36,13 +40,20 @@ function gameStateHandler() {
 
   else if (gameState === 5) { //if player input is wrong
     displayMessage("Uh oh!");
+    if (incorrectSound.isPlaying() === false) {
+      incorrectSound.play();
+    }
     if (millis() - messageTimerStart > messageShowDuration) {
       resetGame();
+      gameState = 0;
     }
   }
 
   else if (gameState === 6) { //delay phase after player input
     displayMessage("Correct! Get Ready...");
+    if (correctSound.isPlaying() === false) {
+      correctSound.play();
+    } 
     if (millis() - messageTimerStart > 2000) {
       readingDelayState = "off";
       gameState = 1;

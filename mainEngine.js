@@ -4,7 +4,7 @@
 
 
 function draw() {
-  background(20);
+  background(20)
   drawGrid();
   gameStateHandler();
 }
@@ -33,7 +33,13 @@ function extendSequence() { //this function adds to the sequence, as the player 
 //---------------------------------------------------------------------------------------
 
 function mousePressed() {
-  if (gameState === 3) {
+  if (gameState === 0) {
+    if (mouseX > menuButtonX && mouseX < menuButtonX + menuButtonWidth && mouseY > menuButtonY && mouseY < menuButtonY + menuButtonHeight) {
+      startTransition = true;
+      console.log("Button clicked"); //debugging
+    }
+  }
+  else if (gameState === 3) {
     if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height &&  playerSequence.length < sequenceLength) {
       let col = int(mouseX/rectWidth);
       let row = int(mouseY/rectHeight);
@@ -118,9 +124,11 @@ function resetGame() {
   sequenceLength = 1;
   sequenceComplete = false;
   currentSquare = -1;
-  gameState = 1;
+  gameState = 0;
   initializeGrid();
   generateInitialSequence();
+  startTransition = false;
+  initializeMenu();
 }
 
 
