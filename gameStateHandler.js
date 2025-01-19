@@ -2,9 +2,10 @@
 
 function gameStateHandler() {
   if (gameState === 0) {
-    drawMenu();
+    displayMenu();
   }
   else if (gameState === 1) { //show sequence
+    drawGrid();
     if (readingDelayState === "off") {
       readingDelayStartTime = millis();
       readingDelayState = "on";
@@ -25,6 +26,7 @@ function gameStateHandler() {
   }
 
   else if (gameState === 2) { //transition to player input
+    drawGrid();
     displayMessage("Your Turn");
     if (millis() - messageTimerStart > messageShowDuration ) {
       gameState = 3;
@@ -32,6 +34,7 @@ function gameStateHandler() {
   }
 
   else if (gameState === 3) {
+    drawGrid();
     //player input phase
   }
 
@@ -39,6 +42,7 @@ function gameStateHandler() {
   //continues until the player loses, hence going to state 5. 
 
   else if (gameState === 5) { //if player input is wrong
+    drawGrid();
     displayMessage("Uh oh!");
     if (incorrectSound.isPlaying() === false) {
       incorrectSound.play();
@@ -50,6 +54,7 @@ function gameStateHandler() {
   }
 
   else if (gameState === 6) { //delay phase after player input
+    drawGrid();
     displayMessage("Correct! Get Ready...");
     if (correctSound.isPlaying() === false) {
       correctSound.play();

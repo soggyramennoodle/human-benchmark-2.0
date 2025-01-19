@@ -1,14 +1,15 @@
 //This file holds all the global variables, as well as preload, and setup.
 
-//================VARIABLES RELATED TO UI==================
-let menuTitle;
-let menuButtonX;
-let menuButtonY;
-let menuButtonWidth;
-let menuButtonHeight;
-let menuTitleX;
-let menuTitleY;
-let startTransition = false;
+//==================VARIABLES RELATED TO UI==================
+const button = {
+  x: 300,
+  y: 350,
+  width: 200,
+  height: 100,
+  targetWidth: 800,
+  targetHeight: 800,
+  growthState: 'idle',
+}
 
 //==================VARIABLES RELATED TO GRID AND SCALING==================
 let currentGridSize = 2;
@@ -21,7 +22,6 @@ let playerSequence = [];
 let highlightDurationLength = 650;
 let highlightStartTime;
 let currentSquare = -1;
-let highlightElapsedTime;
 let highlightState = "off";
 let sequenceComplete = false;
 
@@ -47,13 +47,12 @@ let readingDelayState = "off";
 
 //==================OTHER VARIABLES==================
 let rectWidth, rectHeight;
-let currentRow, currentCol;
 let customFont;
 
 /////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
 
 function preload() {
-  customFont = loadFont('assets/SCHABO-Condensed.otf');
+  customFont = loadFont('assets/SFPRODISPLAYMEDIUM.otf');
   attentionSound = loadSound('assets/Attention to Sequence.mp3');
   inputSound = loadSound('assets/Clicking Sequence.ogg');
   showingSound = loadSound('assets/Showing Sequence.mp3');
@@ -70,43 +69,43 @@ function setup() {
   initializeGrid();
   generateInitialSequence(); //generates sequence, need to find way to put in draw, to add onto sequence
   messageTimerStart = millis();
-  initializeMenu();
+  displayMenu();
 }
 
-function drawMenu() {
-  background(20);
-  textAlign(CENTER, CENTER);
+function displayMenu() {
+  let color1 = 50;
+  let color2 = 56;
+  let color3 = 63;
+  let buttonColor;
 
-  //for the title
-  textSize(64);
-  fill(225);
-  text('Brain Trainer', menuTitleX, menuTitleY);
-
-  //for the button
-  textSize(32);
-  fill(100, 106, 113);
-  rect(menuButtonX, menuTitleY + 100, menuButtonWidth, menuButtonHeight, 10);
+  textAlign(CENTER, CENTER);  
+  textSize(50);
   fill(255);
-  text('Start', menuButtonX + menuButtonWidth/2, menuTitleY + menuButtonHeight/2 + 100);
+  text('Brain Trainer', width/2, height/3); 
 
-
-  if (startTransition === true) {
-    menuTitleX = lerp(menuTitleX, width/2, 0.05);
-    menuTitleY = lerp(menuTitleY, height + 200, 0.05);
-    if (menuTitleY > height + 100) {
+  if (button.growthState === 'idle') { //button hasn't been clicked yet.
+    fill(50, 56, 63);
+    rect(button.x, button.y, button.width, button.height, 20);
+    textSize(25);
+    fill(255);
+    text('Begin', button.x + button.width/2, button.y + button.height / 2); 
+  }
+  else if (button.growthState === 'growing') { //button clicked.
+    button.width = lerp(button.width, button.targetWidth, 0.05);
+    button.height = lerp(button.height, button.targetHeight, 0.05);
+    button.x = lerp(button.x, 0, 0.05); 
+    button.y = lerp(button.y, 0, 0.05);
+    //TRYING TO MAKE COLOR GRADUALLY CHANGE TO GRID COLOR
+    color1 = lerp(color1, 0, 0.05);
+    color2 = lerp(color2, 0, 0.05);
+    color3 = lerp(color3, 0, 0.05);
+    if (button.width >= button.targetWidth - 1 && button.height >= button.targetHeight  - 1) {
       gameState = 1;
     }
-  }
-}
 
-function initializeMenu() {
-  menuTitle = 'Brain Trainer';
-  menuButtonWidth = 200;
-  menuButtonHeight = 50;
-  menuButtonX = width/2 - menuButtonWidth / 2;
-  menuTitleX = width/2;
-  menuTitleY = height/3;
-  menuButtonY = menuTitleY + 100;
+    fill(color1, color2, color3);
+    rect(button.x, button.y, button.width, button.height);
+  }
 }
 
 function initializeGrid() {

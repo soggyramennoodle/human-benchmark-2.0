@@ -2,10 +2,8 @@
 //CS30 Capstone Project
 //This file stores all the core functions of the game.
 
-
 function draw() {
   background(20)
-  drawGrid();
   gameStateHandler();
 }
 
@@ -34,8 +32,8 @@ function extendSequence() { //this function adds to the sequence, as the player 
 
 function mousePressed() {
   if (gameState === 0) {
-    if (mouseX > menuButtonX && mouseX < menuButtonX + menuButtonWidth && mouseY > menuButtonY && mouseY < menuButtonY + menuButtonHeight) {
-      startTransition = true;
+    if (mouseX >= button.x && mouseX <= button.x + button.width && mouseY >= button.y && mouseY <= button.y + button.height) {
+      button.growthState = 'growing';
       console.log("Button clicked"); //debugging
     }
   }
@@ -127,18 +125,7 @@ function resetGame() {
   gameState = 0;
   initializeGrid();
   generateInitialSequence();
-  startTransition = false;
-  initializeMenu();
+  displayMenu(); //redundancy added to try to fix issue !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
-
-///////////////////////--------TESTING CORNER-----------//////////////////////////
-
-function testCoordinate() { //used to test grid coordinate system
-  if (mouseX >=0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-    let gridX = int(mouseX / rectWidth);
-    let gridY = int(mouseY / rectHeight);
-    console.log(gridX, gridY);
-  }
-}
 
