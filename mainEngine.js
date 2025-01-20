@@ -3,7 +3,7 @@
 //This file stores all the core functions of the game.
 
 function draw() {
-  background(20)
+  background(20);
   gameStateHandler();
 }
 
@@ -61,7 +61,7 @@ function checkPlayerInput() {
     console.log("Sequences match, moving to next phase...");
     sequenceLength++;
 
-    if (sequenceLength >  currentGridSize*currentGridSize) {
+    if (sequenceLength >  (currentGridSize - 1)*2) { //MAY CHANGE DEPENDING ON HOW BORING THE GAME IS
       increaseGridSize();
     }
 
@@ -97,6 +97,7 @@ function increaseGridSize() {
 //-------------------------------------------------------------------------------------------
 
 function displayMessage(message) { //may need to figure out how to put this into html/css for better design
+  noStroke();
   if (message !== lastMessage) {
     currentTextX = width/2;
     currentTextY = 0;
@@ -125,7 +126,6 @@ function resetGame() {
   gameState = 0;
   initializeGrid();
   generateInitialSequence();
-  displayMenu(); //redundancy added to try to fix issue !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
 

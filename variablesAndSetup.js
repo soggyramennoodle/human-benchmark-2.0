@@ -9,7 +9,11 @@ const button = {
   targetWidth: 800,
   targetHeight: 800,
   growthState: 'idle',
-}
+};
+
+let color1 = 50;
+let color2 = 53;
+let color3 = 63;
 
 //==================VARIABLES RELATED TO GRID AND SCALING==================
 let currentGridSize = 2;
@@ -56,7 +60,7 @@ function preload() {
   attentionSound = loadSound('assets/Attention to Sequence.mp3');
   inputSound = loadSound('assets/Clicking Sequence.ogg');
   showingSound = loadSound('assets/Showing Sequence.mp3');
-  correctSound = loadSound('assets/Correct Sequence.wav')
+  correctSound = loadSound('assets/Correct Sequence.wav');
   incorrectSound = loadSound('assets/Incorrect Sequence.wav');
 }
 
@@ -73,18 +77,14 @@ function setup() {
 }
 
 function displayMenu() {
-  let color1 = 50;
-  let color2 = 56;
-  let color3 = 63;
-  let buttonColor;
-
+  noStroke();
   textAlign(CENTER, CENTER);  
   textSize(50);
   fill(255);
   text('Brain Trainer', width/2, height/3); 
 
   if (button.growthState === 'idle') { //button hasn't been clicked yet.
-    fill(50, 56, 63);
+    fill(color1, color2, color3);
     rect(button.x, button.y, button.width, button.height, 20);
     textSize(25);
     fill(255);
@@ -96,9 +96,9 @@ function displayMenu() {
     button.x = lerp(button.x, 0, 0.05); 
     button.y = lerp(button.y, 0, 0.05);
     //TRYING TO MAKE COLOR GRADUALLY CHANGE TO GRID COLOR
-    color1 = lerp(color1, 0, 0.05);
-    color2 = lerp(color2, 0, 0.05);
-    color3 = lerp(color3, 0, 0.05);
+    color1 = lerp(color1, 20, 0.05);
+    color2 = lerp(color2, 20, 0.05);
+    color3 = lerp(color3, 20, 0.05);
     if (button.width >= button.targetWidth - 1 && button.height >= button.targetHeight  - 1) {
       gameState = 1;
     }
@@ -120,6 +120,7 @@ function initializeGrid() {
 }
 
 function drawGrid() {
+  stroke(255);
   for (let x = 0; x < currentGridSize; x++) {
     for (let y = 0; y < currentGridSize; y++) {
       if (grid[y][x] > 0) {

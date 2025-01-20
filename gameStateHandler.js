@@ -50,6 +50,14 @@ function gameStateHandler() {
     if (millis() - messageTimerStart > messageShowDuration) {
       resetGame();
       gameState = 0;
+      button.growthState = "idle";
+      button.x = 300;
+      button.y = 350;
+      button.width = 200;
+      button.height = 100;
+      color1 = 50;
+      color2 = 53;
+      color3 = 63;
     }
   }
 
