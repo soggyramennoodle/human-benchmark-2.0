@@ -60,6 +60,7 @@ function checkPlayerInput() {
   else if (playerSequence.length === sequenceLength) {
     console.log("Sequences match, moving to next phase...");
     sequenceLength++;
+    correctSequenceCount++;
 
     if (sequenceLength >  (currentGridSize - 1)*2) { //MAY CHANGE DEPENDING ON HOW BORING THE GAME IS
       increaseGridSize();
@@ -104,11 +105,20 @@ function displayMessage(message) { //may need to figure out how to put this into
     lastMessage = message;
   }
 
-  textAlign(CENTER, CENTER);
-  fill(149, 6, 6);
-  textSize(75);
+  let paddingX = 30;
+  let paddingY = 20;
+  let rectWidth = textWidth(message) + paddingX * 2;
+  let rectHeight = paddingY + 75;
+  
   currentTextX = lerp(currentTextX, width/2, 0.05);
-  currentTextY = lerp(currentTextY, height/6.5, 0.05); //easing into screen only works at very beginning, need to find a way to make it work throughout.
+  currentTextY = lerp(currentTextY, height/10, 0.05); 
+
+  fill(40, 40, 40, 200);
+  rect(currentTextX - rectWidth/2, currentTextY - rectHeight/2, rectWidth, rectHeight, 90);
+
+  textAlign(CENTER, CENTER);
+  fill(255);
+  textSize(45);
   text(message, currentTextX, currentTextY);
 }
 
@@ -126,6 +136,7 @@ function resetGame() {
   gameState = 0;
   initializeGrid();
   generateInitialSequence();
+  correctSequenceCount = 0;
 }
 
 

@@ -43,7 +43,7 @@ function gameStateHandler() {
 
   else if (gameState === 5) { //if player input is wrong
     drawGrid();
-    displayMessage("Uh oh!");
+    displayMessage("Uh oh! Here's your score:" + " " + correctSequenceCount + " " + "levels");
     if (incorrectSound.isPlaying() === false) {
       incorrectSound.play();
     }

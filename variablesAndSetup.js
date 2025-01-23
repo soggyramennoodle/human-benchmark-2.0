@@ -52,6 +52,7 @@ let readingDelayState = "off";
 //==================OTHER VARIABLES==================
 let rectWidth, rectHeight;
 let customFont;
+let correctSequenceCount = 0;
 
 /////////////////////////////////////FUNCTIONS///////////////////////////////////////////////
 
@@ -79,14 +80,14 @@ function setup() {
 function displayMenu() {
   noStroke();
   textAlign(CENTER, CENTER);  
-  textSize(50);
+  textSize(75);
   fill(255);
   text('Brain Trainer', width/2, height/3); 
 
   if (button.growthState === 'idle') { //button hasn't been clicked yet.
     fill(color1, color2, color3);
     rect(button.x, button.y, button.width, button.height, 20);
-    textSize(25);
+    textSize(35);
     fill(255);
     text('Begin', button.x + button.width/2, button.y + button.height / 2); 
   }
