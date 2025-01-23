@@ -19,7 +19,7 @@ let color3 = 63;
 let currentGridSize = 2;
 let sequenceLength = 1; //length of sequence, should increase with dififculty 
 let grid = []; //needs to start empty, to enable dynamic changing during game. initial setup in setup().
-let sequence = []; //stores sequence in order
+let sequence = []; 
 let playerSequence = [];
 
 //==================VARIABLES RELATED TO HIGHLIGHTING==================
@@ -31,10 +31,10 @@ let sequenceComplete = false;
 
 //==================VARIABLES RELATED TO GAMESTATE==================
 let gameState = 0; 
+
 //1 = show sequence
 //2 = transition to show "your turn"
 //3 player input
-//4 transition to check playerSequence
 //5 either reset or continue, etc...
 //6 delay
 
@@ -45,7 +45,7 @@ let currentTextX;
 let currentTextY;
 let lastMessage = '';
 
-let readingDelay = 2000;
+let readingDelay = 1500;
 let readingDelayStartTime = 0;
 let readingDelayState = "off";
 
@@ -72,12 +72,12 @@ function setup() {
   stroke(255);
   textFont(customFont);
   initializeGrid();
-  generateInitialSequence(); //generates sequence, need to find way to put in draw, to add onto sequence
+  generateInitialSequence();
   messageTimerStart = millis();
   displayMenu();
 }
 
-function displayMenu() {
+function displayMenu() { //shows the menu screen
   noStroke();
   textAlign(CENTER, CENTER);  
   textSize(75);
@@ -91,12 +91,11 @@ function displayMenu() {
     fill(255);
     text('Begin', button.x + button.width/2, button.y + button.height / 2); 
   }
-  else if (button.growthState === 'growing') { //button clicked.
+  else if (button.growthState === 'growing') { //button is clicked, fancy stuff to make the transition from menu to game look decent.
     button.width = lerp(button.width, button.targetWidth, 0.05);
     button.height = lerp(button.height, button.targetHeight, 0.05);
     button.x = lerp(button.x, 0, 0.05); 
     button.y = lerp(button.y, 0, 0.05);
-    //TRYING TO MAKE COLOR GRADUALLY CHANGE TO GRID COLOR
     color1 = lerp(color1, 20, 0.05);
     color2 = lerp(color2, 20, 0.05);
     color3 = lerp(color3, 20, 0.05);
@@ -109,7 +108,7 @@ function displayMenu() {
   }
 }
 
-function initializeGrid() {
+function initializeGrid() { //makes grid
   grid = [];
   for (let y = 0; y < currentGridSize; y++) {
     let row = [];
@@ -120,7 +119,7 @@ function initializeGrid() {
   }
 }
 
-function drawGrid() {
+function drawGrid() { //actually draws grid.
   stroke(255);
   for (let x = 0; x < currentGridSize; x++) {
     for (let y = 0; y < currentGridSize; y++) {

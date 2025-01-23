@@ -10,7 +10,7 @@ function draw() {
 //---------------------------------------------------------------------------------------
 
 function generateInitialSequence() { //this function generates a sequence at the beginning of the game
-  sequence = [];  //empty sequence at start, generation occurs in setup()
+  sequence = []; 
   for (let i = 0; i < sequenceLength; i ++) {
     let randomCol = int(random(0, currentGridSize));
     let randomRow = int(random(0, currentGridSize));
@@ -18,26 +18,23 @@ function generateInitialSequence() { //this function generates a sequence at the
   }
   sequenceComplete = false;
   currentSquare = -1;
-  console.log(sequence); //here for debugging purposes
 }
 
 function extendSequence() { //this function adds to the sequence, as the player progresses
   let randomCol = int(random(0, currentGridSize));
   let randomRow = int(random(0, currentGridSize));
-  sequence.push([randomCol, randomRow]);
-  console.log(sequence); //here for debugging purposes
+  sequence.push([randomCol, randomRow])
 }
 
 //---------------------------------------------------------------------------------------
 
 function mousePressed() {
-  if (gameState === 0) {
+  if (gameState === 0) { //if the menu button is pressed, initialize the game.
     if (mouseX >= button.x && mouseX <= button.x + button.width && mouseY >= button.y && mouseY <= button.y + button.height) {
       button.growthState = 'growing';
-      console.log("Button clicked"); //debugging
     }
   }
-  else if (gameState === 3) {
+  else if (gameState === 3) { //checks bounds of player input
     if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height &&  playerSequence.length < sequenceLength) {
       let col = int(mouseX/rectWidth);
       let row = int(mouseY/rectHeight);
@@ -49,10 +46,10 @@ function mousePressed() {
   }
 }
 
-function checkPlayerInput() { 
+function checkPlayerInput() { //checks if player input is correct
   let currentCheckedSquare = playerSequence.length -1;
   if (playerSequence[currentCheckedSquare][0] !==  sequence[currentCheckedSquare][0] || playerSequence[currentCheckedSquare][1] !== sequence[currentCheckedSquare][1]) {
-    gameState = 5; //game over state
+    gameState = 5; //sends user to "game over" state
     messageTimerStart = millis();
     return;
   }
@@ -62,7 +59,7 @@ function checkPlayerInput() {
     sequenceLength++;
     correctSequenceCount++;
 
-    if (sequenceLength >  (currentGridSize - 1)*2) { //MAY CHANGE DEPENDING ON HOW BORING THE GAME IS
+    if (sequenceLength >  (currentGridSize - 1)*2) { //this can be changed to make game progress faster or slower
       increaseGridSize();
     }
 
@@ -70,14 +67,13 @@ function checkPlayerInput() {
       sequenceComplete = false;
       currentSquare = -1;
       extendSequence();
-      gameState = 6; //go to delay state, to transition to another phase.
+      gameState = 6;
       messageTimerStart = millis();
     }
   }
 }
 
-function increaseGridSize() {
-  //increases grid size
+function increaseGridSize() { //self explanatory
   currentGridSize++;
   rectWidth = width/currentGridSize;
   rectHeight = height/currentGridSize;
@@ -97,7 +93,7 @@ function increaseGridSize() {
 
 //-------------------------------------------------------------------------------------------
 
-function displayMessage(message) { //may need to figure out how to put this into html/css for better design
+function displayMessage(message) { //displays messages
   noStroke();
   if (message !== lastMessage) {
     currentTextX = width/2;
@@ -122,8 +118,7 @@ function displayMessage(message) { //may need to figure out how to put this into
   text(message, currentTextX, currentTextY);
 }
 
-function resetGame() {
-  //have to reset grid size, sequence, playerSequence, everything back to original
+function resetGame() { //resets the game back to the state it's in when it first starts.
   currentGridSize = 2;
   rectWidth = width/currentGridSize;
   rectHeight = height/currentGridSize;

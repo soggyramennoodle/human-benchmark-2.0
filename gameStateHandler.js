@@ -1,10 +1,10 @@
 //Handles gameStates
 
-function gameStateHandler() {
+function gameStateHandler() { //handles all the interactions and handoffs between game states
   if (gameState === 0) {
     displayMenu();
   }
-  else if (gameState === 1) { //show sequence
+  else if (gameState === 1) { //sequence is shown 
     drawGrid();
     if (readingDelayState === "off") {
       readingDelayStartTime = millis();
@@ -13,8 +13,8 @@ function gameStateHandler() {
     }
     displayMessage("Watch Carefully");
 
-    if (millis() - readingDelayStartTime > readingDelay) {
-      highlightSequence(); //allows user to read text on screen, before highlighting begins, to make game less painful
+    if (millis() - readingDelayStartTime > readingDelay) { //gives the reader time to read text on screen
+      highlightSequence();
 
     }
 
@@ -25,7 +25,7 @@ function gameStateHandler() {
     }
   }
 
-  else if (gameState === 2) { //transition to player input
+  else if (gameState === 2) { //begin to transition to player input
     drawGrid();
     displayMessage("Your Turn");
     if (millis() - messageTimerStart > messageShowDuration ) {
@@ -33,12 +33,11 @@ function gameStateHandler() {
     }
   }
 
-  else if (gameState === 3) {
+  else if (gameState === 3) { //this is the phase when player inputs their sequence
     drawGrid();
-    //player input phase
   }
 
-  //had gameState 4 here, but because the difficulty increase works, there is no point in having game over, restart, since the game
+  //had gameState 4 here, but because the difficulty increase works, there is no point in having game over, restart button, since the game
   //continues until the player loses, hence going to state 5. 
 
   else if (gameState === 5) { //if player input is wrong
@@ -61,7 +60,7 @@ function gameStateHandler() {
     }
   }
 
-  else if (gameState === 6) { //delay phase after player input
+  else if (gameState === 6) { //delay phase after player input, gives player time to chill
     drawGrid();
     displayMessage("Correct! Get Ready...");
     if (correctSound.isPlaying() === false) {

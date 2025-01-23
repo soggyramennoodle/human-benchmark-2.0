@@ -1,11 +1,11 @@
 //This file stores all the functions related to highlighting the squares on screen.
 
 function highlightSequence() { 
-  if (sequenceComplete === true) {
+  if (sequenceComplete === true) { 
     return;
   }
 
-  if (currentSquare === -1) { 
+  if (currentSquare === -1) { //the sequence will begin to show.
     currentSquare = 0;
     highlightStartTime = millis();
     highlightState = "on";
